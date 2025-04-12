@@ -9,7 +9,7 @@ interface VideoChatProps {
 
 interface Transcript {
   id: number;
-  speaker: 'nurse' | 'user';
+  speaker: 'preceptor' | 'nurse';
   text: string;
   timestamp: Date;
 }
