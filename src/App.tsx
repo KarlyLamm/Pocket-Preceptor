@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Video, Stethoscope } from 'lucide-react';
+import { Send, Stethoscope } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { VideoChat } from './components/VideoChat';
 import type { Message, ChatState } from './types';
+import logo from './assets/logo.png';
+import nurseImage from './assets/nurse-image.jpg';
 
 function App() {
   const [state, setState] = useState<ChatState>({
@@ -78,14 +80,18 @@ function App() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-4xl mx-auto p-4">
         {/* Header */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 border border-blue-100 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-3 bg-blue-500 rounded-xl">
-              <Stethoscope size={24} className="text-white" />
-            </div>
+        <div className="rounded-2xl shadow-lg p-4 border border-blue-100 mb-4" style={{ 
+          background: 'linear-gradient(135deg, #102F4D 0%, #1a4a6e 100%)'
+        }}>
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-800">Pocket Preceptor</h1>
-              <p className="text-blue-600 font-medium">Your Personal Clinical Guide & Mentor</p>
+              <img src={logo} alt="Pocket Preceptor Logo" className="h-40" />
+              <p className="text-white font-medium">Your Personal Clinical Guide & Mentor</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <button className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md hover:opacity-90 transition-opacity">
+                <img src={nurseImage} alt="User Profile" className="w-full h-full object-cover" />
+              </button>
             </div>
           </div>
         </div>
@@ -96,9 +102,9 @@ function App() {
           <div className="h-[60vh] overflow-y-auto p-6 space-y-6">
             {state.messages.length === 0 && (
               <div className="text-center py-8">
-                <div className="bg-blue-50 rounded-2xl p-6 inline-block">
-                  <Stethoscope size={32} className="text-blue-500 mx-auto mb-4" />
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Pocket Preceptor</h2>
+                <div className="rounded-2xl p-6 inline-block" style={{ backgroundColor: 'rgba(16, 47, 77, 0.1)' }}>
+                <Stethoscope size={32} className="text-[#102F4D] mx-auto mb-4" />
+                <h2 className="text-xl font-semibold text-[#102F4D] mb-2">Welcome to Pocket Preceptor</h2>
                   <p className="text-gray-600 max-w-md mx-auto">
                     Your trusted companion for medication compatibility, clinical procedures, and instant access to experienced preceptors.
                   </p>
@@ -125,12 +131,13 @@ function App() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask your clinical question..."
-                  className="flex-1 border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
+                  className="flex-1 border border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#102F4D] focus:border-transparent transition-all bg-white"
                 />
                 <button
                   onClick={handleSend}
                   disabled={!input.trim()}
-                  className="bg-blue-500 text-white px-6 py-3 rounded-xl hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium"
+                  className="text-white px-6 py-3 rounded-xl hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium"
+                  style={{ backgroundColor: '#102F4D' }}
                 >
                   <Send size={20} />
                   <span>Send</span>

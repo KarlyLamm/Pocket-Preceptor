@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Video, X, Mic, MicOff, VideoOff, Loader, FileText, GraduationCap } from 'lucide-react';
 import preceptorVideo from '../assets/preceptor.mp4';
 import nurseVideo from '../assets/nurse.mp4';
+import { LearningManagement } from './LearningManagement';
 
 interface VideoChatProps {
   onClose: () => void;
@@ -21,18 +22,19 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
   const [showSummary, setShowSummary] = useState(false);
-  const [currentNurseVideo, setCurrentNurseVideo] = useState(0);
-  const [currentUserVideo, setCurrentUserVideo] = useState(0);
+  const [showLearningManagement, setShowLearningManagement] = useState(false);
 
   // Simulate live transcription
   useEffect(() => {
     if (!isLoading && !showSummary) {
       const sampleConversation = [
-        { speaker: 'nurse' as const, text: "Hello! I understand you have a question about IV medication compatibility?" },
-        { speaker: 'user' as const, text: "Yes, I wanted to confirm if Vancomycin and Zosyn can be run in the same line?" },
-        { speaker: 'nurse' as const, text: "That's a great question. No, Vancomycin and Zosyn should never be run in the same line due to the risk of precipitation." },
-        { speaker: 'user' as const, text: "What would you recommend for administration then?" },
-        { speaker: 'nurse' as const, text: "You'll need to use separate IV lines, or if using the same line, ensure thorough flushing between medications. Always follow your facility's protocol for line flushing." },
+        { speaker: 'preceptor' as const, text: "Hello! I'm Preceptor Sarah. How can I help you today?" },
+        { speaker: 'nurse' as const, text: "Hi Sarah, I have a question about IV medication compatibility." },
+        { speaker: 'preceptor' as const, text: "Of course! What medications are you wondering about?" },
+        { speaker: 'nurse' as const, text: "Can Vancomycin and Zosyn be run in the same line?" },
+        { speaker: 'preceptor' as const, text: "That's a great question. No, Vancomycin and Zosyn should never be run in the same line due to the risk of precipitation." },
+        { speaker: 'nurse' as const, text: "What would you recommend for administration then?" },
+        { speaker: 'preceptor' as const, text: "You'll need to use separate IV lines, or if using the same line, ensure thorough flushing between medications. Always follow your facility's protocol for line flushing." },
       ];
 
       let index = 0;
@@ -86,9 +88,12 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   };
 
   const handleOpenLMS = () => {
-    // This would typically open your LMS system
-    window.alert('Opening Learning Management System...');
+    setShowLearningManagement(true);
   };
+
+  if (showLearningManagement) {
+    return <LearningManagement onClose={() => setShowLearningManagement(false)} />;
+  }
 
   if (showSummary) {
     return (
@@ -96,7 +101,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
         <div className="bg-white rounded-lg w-full max-w-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold flex items-center gap-2">
-              <FileText className="text-blue-600" />
+              <FileText className="text-[#102f4d]" />
               Call Summary
             </h2>
             <button
@@ -122,18 +127,18 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
               <div className="max-h-64 overflow-y-auto space-y-3">
                 {transcripts.map(transcript => (
                   <div key={transcript.id} className="flex gap-2">
-                    <span className="font-medium text-gray-900 min-w-[60px]">
-                      {transcript.speaker === 'nurse' ? 'Nurse:' : 'You:'}
+                    <span className="font-medium text-gray-900 min-w-[80px] flex-shrink-0">
+                      {transcript.speaker === 'nurse' ? 'Nurse:' : 'Preceptor:'}
                     </span>
-                    <p className="text-gray-700">{transcript.text}</p>
+                    <p className="text-gray-700 flex-1">{transcript.text}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-blue-50 rounded-lg p-4">
-              <h3 className="font-medium text-blue-900 mb-2">Recommendations</h3>
-              <ul className="list-disc list-inside space-y-2 text-blue-800">
+            <div className="bg-[#102f4d] bg-opacity-10 rounded-lg p-4">
+              <h3 className="font-medium text-[#102f4d] mb-2">Recommendations</h3>
+              <ul className="list-disc list-inside space-y-2 text-[#102f4d]">
                 <li>Use separate IV lines for Vancomycin and Zosyn</li>
                 <li>Follow proper line flushing protocols between medications</li>
                 <li>Consult facility guidelines for specific procedures</li>
@@ -144,14 +149,14 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
           <div className="mt-6 space-y-3">
             <button
               onClick={handleOpenLMS}
-              className="w-full bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600 transition-colors flex items-center justify-center gap-2"
             >
               <GraduationCap size={20} />
               <span>Access Learning Management Tool</span>
             </button>
             <button
               onClick={handleClose}
-              className="w-full bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              className="w-full bg-[#102f4d] text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
             >
               Close Summary
             </button>
@@ -166,7 +171,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
       <div className="bg-white rounded-lg w-full max-w-4xl">
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-semibold flex items-center gap-2">
-            <Video className="text-blue-600" />
+            <Video className="text-[#102f4d]" />
             {isLoading ? 'Connecting to Preceptor' : 'Connected with Preceptor Sarah'}
           </h2>
           <button
@@ -181,9 +186,9 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
           {isLoading ? (
             <div className="aspect-video bg-gray-50 rounded-lg flex flex-col items-center justify-center space-y-6">
               <div className="relative">
-                <Loader size={48} className="text-blue-500 animate-spin" />
+                <Loader size={48} className="text-[#102f4d] animate-spin" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-sm font-medium text-blue-600">{loadingProgress}%</span>
+                  <span className="text-sm font-medium text-[#102f4d]">{loadingProgress}%</span>
                 </div>
               </div>
               <div className="space-y-2 text-center">
@@ -191,7 +196,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                 <div className="flex flex-col items-center space-y-1">
                   <div className="h-2 w-64 bg-gray-200 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-blue-500 transition-all duration-500 ease-out"
+                      className="h-full bg-[#102f4d] transition-all duration-500 ease-out"
                       style={{ width: `${loadingProgress}%` }}
                     />
                   </div>
@@ -254,11 +259,11 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                     <div
                       key={transcript.id}
                       className={`flex gap-2 items-start animate-fade-in ${
-                        transcript.speaker === 'nurse' ? 'text-blue-600' : 'text-gray-700'
+                        transcript.speaker === 'nurse' ? 'text-[#102f4d]' : 'text-gray-700'
                       }`}
                     >
                       <span className="font-medium min-w-[60px]">
-                        {transcript.speaker === 'nurse' ? 'Nurse:' : 'You:'}
+                        {transcript.speaker === 'nurse' ? 'Nurse:' : 'Preceptor:'}
                       </span>
                       <p className="flex-1">{transcript.text}</p>
                       <span className="text-xs text-gray-500">
@@ -293,7 +298,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
               </button>
               <button
                 onClick={handleEndCall}
-                className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition-colors"
+                className="bg-[#102f4d] text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-colors"
               >
                 End Call
               </button>
