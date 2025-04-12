@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Video, X, Mic, MicOff, VideoOff, Loader, FileText, GraduationCap } from 'lucide-react';
+import preceptorVideo from '../assets/preceptor.mp4';
+import nurseVideo from '../assets/nurse.mp4';
 
 interface VideoChatProps {
   onClose: () => void;
@@ -246,7 +248,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                     loop
                     muted
                     className="w-full h-full object-cover"
-                    src={DEMO_VIDEOS.nurse[currentNurseVideo]}
+                    src={preceptorVideo}
                   />
                   <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
                     Preceptor Sarah
@@ -260,8 +262,8 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                       autoPlay
                       loop
                       muted
-                      className="w-full h-full object-cover transform scale-x-[-1]"
-                      src={DEMO_VIDEOS.user[currentUserVideo]}
+                      className="w-full h-full scale-x-[-1]"
+                      src={nurseVideo}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-800">
