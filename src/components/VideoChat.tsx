@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Video, X, Mic, MicOff, VideoOff, Loader, FileText, GraduationCap } from 'lucide-react';
+import preceptorVideo from '../assets/preceptor.mp4';
+import nurseVideo from '../assets/nurse.mp4';
 
 interface VideoChatProps {
   onClose: () => void;
@@ -7,25 +9,10 @@ interface VideoChatProps {
 
 interface Transcript {
   id: number;
-  speaker: 'nurse' | 'user';
+  speaker: 'preceptor' | 'nurse';
   text: string;
   timestamp: Date;
 }
-
-// Example videos for the demo
-const DEMO_VIDEOS = {
-  nurse: [
-    "https://cdn.coverr.co/videos/coverr-a-female-doctor-talking-to-the-camera-5244/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-doctor-talking-to-the-camera-5243/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-female-doctor-talking-to-the-camera-5242/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-female-doctor-talking-to-the-camera-2-5241/1080p.mp4"
-  ],
-  user: [
-    "https://cdn.coverr.co/videos/coverr-young-woman-talking-during-video-call-1584/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-person-using-laptop-4584/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-woman-having-a-video-call-3634/1080p.mp4"
-  ]
-};
 
 export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,24 +23,6 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   const [showSummary, setShowSummary] = useState(false);
   const [currentNurseVideo, setCurrentNurseVideo] = useState(0);
   const [currentUserVideo, setCurrentUserVideo] = useState(0);
-
-  // Rotate through videos periodically
-  useEffect(() => {
-    if (!isLoading && !showSummary) {
-      const nurseInterval = setInterval(() => {
-        setCurrentNurseVideo(prev => (prev + 1) % DEMO_VIDEOS.nurse.length);
-      }, 8000);
-
-      const userInterval = setInterval(() => {
-        setCurrentUserVideo(prev => (prev + 1) % DEMO_VIDEOS.user.length);
-      }, 10000);
-
-      return () => {
-        clearInterval(nurseInterval);
-        clearInterval(userInterval);
-      };
-    }
-  }, [isLoading, showSummary]);
 
   // Simulate live transcription
   useEffect(() => {
@@ -246,7 +215,7 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                     loop
                     muted
                     className="w-full h-full object-cover"
-                    src={DEMO_VIDEOS.nurse[currentNurseVideo]}
+                    src={preceptorVideo}
                   />
                   <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
                     Preceptor Sarah
@@ -260,8 +229,8 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
                       autoPlay
                       loop
                       muted
-                      className="w-full h-full object-cover transform scale-x-[-1]"
-                      src={DEMO_VIDEOS.user[currentUserVideo]}
+                      className="w-full h-full scale-x-[-1]"
+                      src={nurseVideo}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-800">
