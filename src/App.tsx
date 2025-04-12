@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { VideoChat } from './components/VideoChat';
+import { getOpenAIResponse } from './openaiService';
 import type { Message, ChatState } from './types';
 import logo from './assets/logo.png';
 import nurseImage from './assets/nurse-image.jpg';
@@ -50,15 +51,9 @@ function App() {
     setInput('');
 
     // Check for specific medication compatibility question
-    const medicationQuestion = input.toLowerCase();
-    let aiResponse = '';
-
-    if (medicationQuestion.includes('vancomycin') && medicationQuestion.includes('zosyn') && 
-        (medicationQuestion.includes('line') || medicationQuestion.includes('iv') || medicationQuestion.includes('compatible'))) {
-      aiResponse = "Vancomycin and Zosyn are NOT compatible when run through the same line due to risk of precipitation.";
-    } else {
-      aiResponse = "I understand your question. Based on nursing best practices, I can provide some guidance. However, for more specific advice, I'd recommend connecting with one of our nursing professionals via video chat.";
-    }
+    const query = input.toLowerCase();
+    let aiResponse = await getOpenAIResponse(query);
+	  aiResponse = aiResponse.choices[0].text;
 
     // Simulate AI response delay
     setTimeout(() => {
