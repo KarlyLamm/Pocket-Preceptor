@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Video, X, Mic, MicOff, VideoOff, Loader, FileText, GraduationCap } from 'lucide-react';
+import { Video, X, Mic, MicOff, VideoOff, Loader, FileText, GraduationCap, Users } from 'lucide-react';
 import preceptorVideo from '../assets/preceptor.mp4';
 import nurseVideo from '../assets/nurse.mp4';
 import { LearningManagement } from './LearningManagement';
@@ -154,6 +154,15 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
               <GraduationCap size={20} />
               <span>Access Learning Management Tool</span>
             </button>
+            <a
+              href="https://nursecommunity.pocketpreceptor.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600 transition-colors flex items-center justify-center gap-2"
+            >
+              <Users size={20} />
+              <span>Join Our Forum Community</span>
+            </a>
             <button
               onClick={handleClose}
               className="w-full bg-[#102f4d] text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
