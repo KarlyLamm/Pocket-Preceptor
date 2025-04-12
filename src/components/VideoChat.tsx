@@ -14,21 +14,6 @@ interface Transcript {
   timestamp: Date;
 }
 
-// Example videos for the demo
-const DEMO_VIDEOS = {
-  nurse: [
-    "https://cdn.coverr.co/videos/coverr-a-female-doctor-talking-to-the-camera-5244/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-doctor-talking-to-the-camera-5243/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-female-doctor-talking-to-the-camera-5242/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-female-doctor-talking-to-the-camera-2-5241/1080p.mp4"
-  ],
-  user: [
-    "https://cdn.coverr.co/videos/coverr-young-woman-talking-during-video-call-1584/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-person-using-laptop-4584/1080p.mp4",
-    "https://cdn.coverr.co/videos/coverr-woman-having-a-video-call-3634/1080p.mp4"
-  ]
-};
-
 export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -38,24 +23,6 @@ export const VideoChat: React.FC<VideoChatProps> = ({ onClose }) => {
   const [showSummary, setShowSummary] = useState(false);
   const [currentNurseVideo, setCurrentNurseVideo] = useState(0);
   const [currentUserVideo, setCurrentUserVideo] = useState(0);
-
-  // Rotate through videos periodically
-  useEffect(() => {
-    if (!isLoading && !showSummary) {
-      const nurseInterval = setInterval(() => {
-        setCurrentNurseVideo(prev => (prev + 1) % DEMO_VIDEOS.nurse.length);
-      }, 8000);
-
-      const userInterval = setInterval(() => {
-        setCurrentUserVideo(prev => (prev + 1) % DEMO_VIDEOS.user.length);
-      }, 10000);
-
-      return () => {
-        clearInterval(nurseInterval);
-        clearInterval(userInterval);
-      };
-    }
-  }, [isLoading, showSummary]);
 
   // Simulate live transcription
   useEffect(() => {
