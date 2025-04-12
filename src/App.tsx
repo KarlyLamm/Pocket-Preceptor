@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Video, Stethoscope } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { VideoChat } from './components/VideoChat';
+import { OpenAIComponent } from './components/OpenAIComponent';
 import type { Message, ChatState } from './types';
 
 function App() {
@@ -94,6 +95,7 @@ function App() {
         <div className="bg-white rounded-2xl shadow-lg border border-blue-100 overflow-hidden">
           {/* Messages Area */}
           <div className="h-[60vh] overflow-y-auto p-6 space-y-6">
+            <OpenAIComponent />
             {state.messages.length === 0 && (
               <div className="text-center py-8">
                 <div className="bg-blue-50 rounded-2xl p-6 inline-block">
