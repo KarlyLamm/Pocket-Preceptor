@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Stethoscope } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { VideoChat } from './components/VideoChat';
 import type { Message, ChatState } from './types';
@@ -8,7 +8,16 @@ import nurseImage from './assets/nurse-image.jpg';
 
 function App() {
   const [state, setState] = useState<ChatState>({
-    messages: [],
+    messages: [
+      {
+        id: 'welcome-message',
+        content: "Hey, I'm an AI agent, here to help answer your questions. You can also join our <a href='https://nursecommunity.pocketpreceptor.com' target='_blank' rel='noopener noreferrer' class='text-blue-500 hover:underline'>Nursing Community</a> here for peer-to-peer support.",
+        sender: 'ai',
+        timestamp: new Date(),
+        showConnect: false,
+        showCommunityButton: true
+      }
+    ],
     isLoading: false,
     isVideoChat: false,
   });
@@ -103,8 +112,8 @@ function App() {
             {state.messages.length === 0 && (
               <div className="text-center py-8">
                 <div className="rounded-2xl p-6 inline-block" style={{ backgroundColor: 'rgba(16, 47, 77, 0.1)' }}>
-                <Stethoscope size={32} className="text-[#102F4D] mx-auto mb-4" />
-                <h2 className="text-xl font-semibold text-[#102F4D] mb-2">Welcome to Pocket Preceptor</h2>
+                  <img src={logo} alt="Pocket Preceptor Logo" className="h-16 mx-auto mb-4" />
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Pocket Preceptor</h2>
                   <p className="text-gray-600 max-w-md mx-auto">
                     Your trusted companion for medication compatibility, clinical procedures, and instant access to experienced preceptors.
                   </p>
@@ -146,8 +155,6 @@ function App() {
             </div>
           </div>
         </div>
-
-
       </div>
 
       {/* Video Chat Modal */}

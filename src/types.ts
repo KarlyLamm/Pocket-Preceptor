@@ -4,6 +4,7 @@ export interface Message {
   sender: 'user' | 'ai';
   timestamp: Date;
   showConnect?: boolean;
+  showCommunityButton?: boolean;
 }
 
 export interface ChatState {
